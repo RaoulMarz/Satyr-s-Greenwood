@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/v2_-_Beast_theme.ogg-e053295c08dd1c340470795c0903daf2.oggstr"
+
+[deps]
+
+source_file="res://Assets/Music/Soundtracks/v2_-_Beast_theme.ogg"
+dest_files=[ "res://.import/v2_-_Beast_theme.ogg-e053295c08dd1c340470795c0903daf2.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

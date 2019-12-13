@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/satyr_7_title.ogg-feea877f95d3c01c22e215b50485bf59.oggstr"
+
+[deps]
+
+source_file="res://Assets/Music/Soundtracks/satyr_7_title.ogg"
+dest_files=[ "res://.import/satyr_7_title.ogg-feea877f95d3c01c22e215b50485bf59.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

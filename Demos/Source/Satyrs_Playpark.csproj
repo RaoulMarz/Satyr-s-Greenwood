@@ -56,6 +56,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MusicPlayer.cs" />
     <Compile Include="TestScene1.cs" />
+    <Compile Include="SpriteAdvocate.cs" />
+    <Compile Include="EnumerationDefinitions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

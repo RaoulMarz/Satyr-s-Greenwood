@@ -1,5 +1,6 @@
 ﻿using System;
 using Godot;
+using System.Collections.Specialized;
 using System.Collections.Generic;
 
 namespace Satyrs_Playpark
@@ -14,9 +15,16 @@ namespace Satyrs_Playpark
             //musicPlayList = new Dictionary<string, string>();
         }
 
-        public void addSong(string songDescriptor)
+        public void AddSong(string songDescriptor)
         {
 
+        }
+
+        public StringCollection GetItemsForPlaylist(string playlistTag)
+        {
+            StringCollection resultList = new StringCollection();
+
+            return resultList;
         }
     }
 }
