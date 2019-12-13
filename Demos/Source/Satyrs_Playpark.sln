@@ -1,0 +1,19 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Satyrs_Playpark", "Satyrs_Playpark.csproj", "{F5470676-3D7C-4CEF-8064-EDBE1B7D2754}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+	Debug|Any CPU = Debug|Any CPU
+	Release|Any CPU = Release|Any CPU
+	Tools|Any CPU = Tools|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F5470676-3D7C-4CEF-8064-EDBE1B7D2754}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5470676-3D7C-4CEF-8064-EDBE1B7D2754}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5470676-3D7C-4CEF-8064-EDBE1B7D2754}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5470676-3D7C-4CEF-8064-EDBE1B7D2754}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5470676-3D7C-4CEF-8064-EDBE1B7D2754}.Tools|Any CPU.ActiveCfg = Tools|Any CPU
+		{F5470676-3D7C-4CEF-8064-EDBE1B7D2754}.Tools|Any CPU.Build.0 = Tools|Any CPU
+	EndGlobalSection
+EndGlobal
