@@ -1,6 +1,63 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://CultHideout.cs" type="Script" id=1]
+[ext_resource path="res://Assets/Models/hideout_deepwoods_landscape.dae" type="PackedScene" id=2]
+[ext_resource path="res://Assets/Images/AnimatedCharacters/skeleton_walker1_seq1.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Images/AnimatedCharacters/skeleton_walker1_seq3.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Images/AnimatedCharacters/skeleton_walker1_seq2.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Images/willowtree#2.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Images/willowtree#1.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Models/forest_cult_chill-zone#3.dae" type="PackedScene" id=8]
+[ext_resource path="res://HelpPanel.tscn" type="PackedScene" id=9]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 3 ), ExtResource( 5 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
 
 [node name="CultHideout" type="Spatial"]
 script = ExtResource( 1 )
+
+[node name="hideout_deepwoods_landscape" parent="." instance=ExtResource( 2 )]
+transform = Transform( -22, 0, 7.00946e-06, 0, 18, 0, -8.56712e-06, 0, -18, -1.17797, 2.08017, -125.533 )
+
+[node name="animsprite-Skeleton-Mob" type="AnimatedSprite3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.9719, 0 )
+frames = SubResource( 1 )
+
+[node name="animsprite-Skeleton-Mob2" type="AnimatedSprite3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -18.0846, 13.6479, -2.6827 )
+frames = SubResource( 1 )
+
+[node name="animsprite-Skeleton-Mob3" type="AnimatedSprite3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20.9278, 12.9779, -24.9184 )
+frames = SubResource( 1 )
+
+[node name="animsprite-Wraith-Mob" type="AnimatedSprite3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20.9278, 12.9779, -24.9184 )
+frames = SubResource( 1 )
+
+[node name="game1-Timer" type="Timer" parent="."]
+wait_time = 0.03
+
+[node name="game-Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.983255, 0.182236, 0, -0.182236, 0.983255, 0, 34.885, 52.1343 )
+fov = 65.0
+far = 240.0
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform( 2.5, 0, 0, 0, 2.6, 0, 0, 0, 2.5, -35.4189, 21.5128, -45.1851 )
+texture = ExtResource( 7 )
+
+[node name="Sprite3D2" type="Sprite3D" parent="."]
+transform = Transform( 2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, -13.5952, 19.8231, -47.6446 )
+texture = ExtResource( 6 )
+
+[node name="forest_cult_chill-zone#3" parent="." instance=ExtResource( 8 )]
+transform = Transform( -1.4, 0, -4.67297e-07, 0, 1.4, 0, 5.4518e-07, 0, -1.2, -123.871, 10.8148, -131.862 )
+
+[node name="HelpPanel" parent="." instance=ExtResource( 9 )]
+visible = false

@@ -10,14 +10,15 @@ namespace Satyrs_Greenwood
         private double speed = 50.0f;
         /* "res://levels/level2.tscn" */
         public PackedScene introScene;
+        private StoryArcBoard storyArcBoard = null;
         public string introScenePath;
         private Camera gameCamera;
         private Sprite3D hudSpritePathFind;
         private Sprite3D spriteGameSplash;
         private Sprite3D spritePalms1;
         private Sprite3D spritePalms2;
-        private Sprite3D spriteIndicatorCamera;
-        private Sprite3D spriteIndicatorPlayer;
+        //private Sprite3D spriteIndicatorCamera;
+        //private Sprite3D spriteIndicatorPlayer;
         private AnimatedSprite3D animspriteRippleFlames;
         private Timer introTimer;
         private EnumMovementEntity movementEntity = EnumMovementEntity.MOVEMENT_ENTITY_CAMERA;
@@ -25,14 +26,19 @@ namespace Satyrs_Greenwood
         private bool completedFlagIntro = false;
         private bool showHUDPathFind = false;
         private int introTimerCounter = 0;
+        private int currentParagraph = 1;
         private int introDoneTicks = 120;
-        private int introCutsceneTicks = 240;
+        private int introCutsceneTicks = 420;
         private SceneUtilities sceneUtil;
         private Dictionary<string, DateTime> keyBounceMap = new Dictionary<string, DateTime>();
         const float CAMERA_FOV_DECREASE = -0.2f;
         const float CAMERA_FOV_INCREASE = 0.2f;
         const float CAMERA_FAR_DECREASE = -0.25f;
         const float CAMERA_FAR_INCREASE = 0.25f;
+        string[] introStoryTextArray = {"You have been secretly summoned by the King, and have met the King and his most trusted outside the walls of the town.",
+            "Your mission which you rightly could not refuse, is to set out to investigate some troubling disturbances that seems to be connected to what is now Satyr's Greenwood.",
+                "Not much is known, except that rumors persist about some extremely stealthy cul,t that if the murmurings are true, are set out to spread evil and malfeasance." };
+        const string storyArcResource = "res://StoryArcBoard.tscn";
 
         private static Dictionary<string, string> GetProperties(object obj)
         {
@@ -59,32 +65,36 @@ namespace Satyrs_Greenwood
             }
         }
 
-        private static void PrintObjectProperties(string tag, object obj)
-        {
-            var props = GetProperties(obj);
-            if (props.Count > 0)
-            {
-                GD.Print($"{tag} #properties =  {props.Count}");
-
-                //string propValueStr = "";
-                StringBuilder sb = new StringBuilder();
-                foreach (var prop in props)
-                {
-                    sb.Clear();
-                    //propValueStr = "";
-                    sb.Append(prop.Key);
-                    sb.Append(": ");
-                    sb.Append(prop.Value);
-                    GD.Print($"[ {tag} ] property = {sb.ToString()}");
-                }
-            }
-        }
-
         private void ResetSpritesVisibility(bool visibleFlag)
         {
             spritePalms1.Visible = visibleFlag;
             spritePalms2.Visible = visibleFlag;
             animspriteRippleFlames.Visible = visibleFlag;
+        }
+
+        private void GeneratePlayerViewport()
+        {
+            PackedScene viewportScene = (PackedScene)ResourceLoader.Load(storyArcResource);
+            if (viewportScene != null)
+            {
+                storyArcBoard = (StoryArcBoard)viewportScene.Instance();
+                GD.Print($"Loading storyArcBoard from PackedScene, storyArcBoard = {storyArcBoard.Name}");
+                //playerViewport.AddChild(viewportScene.Instance());
+                storyArcBoard.Visible = false;
+                storyArcBoard.SetTitle("Appointment by the King");
+                /*GetTree().Root.AddChild*/
+                AddChild(storyArcBoard);
+            }
+        }
+
+        private void ShowArcBoardParagraph(int paragraph)
+        {
+            if ((storyArcBoard != null) && (paragraph <= 3))
+            {
+                storyArcBoard.Visible = true;
+                string paraText = introStoryTextArray[paragraph - 1];
+                storyArcBoard.SetParagraphText(paragraph, $"[code]{paraText}[/code]");
+            }
         }
 
         private void GameCameraTranslateAxis(float xlateValue, GeometricAxis axisChoice/* = GeometricAxis.GEOMETRIC_AXIS_Z*/)
@@ -122,6 +132,14 @@ namespace Satyrs_Greenwood
         public void _on_IntroTimer_timeout()
         {
             introTimerCounter += 1;
+            if ((introTimerCounter % 150) == 90)
+            {
+                if (currentParagraph <= 3)
+                {
+                    ShowArcBoardParagraph(currentParagraph);
+                    currentParagraph += 1;
+                }
+            }
             if ((introTimerCounter % 10) == 0)
             {
                 GD.Print($"[TestScene] introTimer timeout, counter = {introTimerCounter}");
@@ -157,7 +175,10 @@ namespace Satyrs_Greenwood
                 GD.Print($"Switching scenes, Timer Counter = {introTimerCounter}");
                 introTimer.Stop();
                 if (sceneUtil != null)
+                {
+                    SceneUtilities.DebugPrintScenesList(this);
                     sceneUtil.ChangeScene(this, "res://IntroScene.tscn");
+                }
             }
             if (((introTimerCounter % 5) == 0) && (showHUDPathFind))
             {
@@ -177,11 +198,11 @@ namespace Satyrs_Greenwood
                 //if (introTimer.isStopped()) {
                 introTimer.Start();
                 //}
-                var props = GetProperties(introTimer);
+                var props = Diagnostics.GetProperties(introTimer);
                 if (props.Count > 0)
                 {
                     GD.Print("introTimer, #properties = " + props.Count);
-                    PrintObjectProperties("intro-Timer", introTimer);
+                    Diagnostics.PrintObjectProperties("intro-Timer", introTimer);
                 }
             }
             //Sprite mySprite = GetNodeOrNull<Sprite>("MySprite");
@@ -189,23 +210,12 @@ namespace Satyrs_Greenwood
             if (gameCamera != null)
             {
                 //gameCamera.Fov = 180;
-                var props = GetProperties(gameCamera);
+                var props = Diagnostics.GetProperties(gameCamera);
                 if (props.Count > 0)
                 {
                     GD.Print("gameCamera, #properties = " + props.Count);
 
-                    //string propValueStr = "";
-                    StringBuilder sb = new StringBuilder();
-                    foreach (var prop in props)
-                    {
-                        sb.Clear();
-                        //propValueStr = "";
-                        sb.Append(prop.Key);
-                        //writer.Write(prop.Key);
-                        sb.Append(": ");
-                        sb.Append(prop.Value);
-                        GD.Print($"gameCamera, property = {sb.ToString()}");
-                    }
+                    Diagnostics.PrintObjectProperties("gameCamera", gameCamera);
                 }
             }
 
@@ -218,11 +228,12 @@ namespace Satyrs_Greenwood
             spritePalms2 = this.GetNodeOrNull<Sprite3D>("sprite-Palms2");
             spritePalms1.Visible = false;
             spritePalms2.Visible = false;
+            /*
             spriteIndicatorCamera = this.GetNodeOrNull<Sprite3D>("sprite-Camera-Indicator");
             spriteIndicatorPlayer = this.GetNodeOrNull<Sprite3D>("sprite-Player-Indicator");
             spriteIndicatorCamera.Visible = false;
             spriteIndicatorPlayer.Visible = false;
-            //gameCamera.GetAnimation();
+            */           
             hudSpritePathFind = this.GetNodeOrNull<Sprite3D>("sprite-HUD-PathFind");
             if (hudSpritePathFind != null)
             {
@@ -240,9 +251,9 @@ namespace Satyrs_Greenwood
             if (animspriteRippleFlames != null)
             {
                 animspriteRippleFlames.Visible = false;
-                PrintObjectProperties("intro-Timer", introTimer);
+                Diagnostics.PrintObjectProperties("intro-Timer", introTimer);
             }
-
+            GeneratePlayerViewport();
         }
 
         private void OrientHUDPathFind()
@@ -258,13 +269,13 @@ namespace Satyrs_Greenwood
         {
             if (movementEntity == EnumMovementEntity.MOVEMENT_ENTITY_CAMERA)
             {
-                spriteIndicatorCamera.Visible = true;
-                spriteIndicatorPlayer.Visible = false;
+                //spriteIndicatorCamera.Visible = true;
+                //spriteIndicatorPlayer.Visible = false;
             }
             if (movementEntity == EnumMovementEntity.MOVEMENT_ENTITY_PLAYERCHARACTER)
             {
-                spriteIndicatorCamera.Visible = false;
-                spriteIndicatorPlayer.Visible = true;
+                //spriteIndicatorCamera.Visible = false;
+                //spriteIndicatorPlayer.Visible = true;
             }
         }
 

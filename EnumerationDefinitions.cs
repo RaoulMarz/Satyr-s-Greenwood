@@ -14,4 +14,14 @@ namespace Satyrs_Greenwood
         GEOMETRIC_AXIS_Y,
         GEOMETRIC_AXIS_Z
     }
+
+    public enum EnemyCharacterTypes
+    {
+        ENEMY_NONE,
+        ENEMY_SKELETON,
+        ENEMY_VAMPIREBAT,
+        ENEMY_WREATH,
+        ENEMY_WITCH,
+        ENEMY_GRIMREAPER
+    }
 }

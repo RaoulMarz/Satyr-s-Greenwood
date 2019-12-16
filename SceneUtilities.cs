@@ -7,8 +7,10 @@ namespace Satyrs_Greenwood
     {
         public PackedScene newScene;
 
-        public void CleanPreviousScenes(Spatial referenceScene)
+        public void CleanPreviousScenes(Spatial referenceScene, String callSource = "")
         {
+            int numChildren = referenceScene.GetTree().Root.GetChildCount();
+            GD.Print($"CleanPreviousScenes() - scenes count = {numChildren}, called from {callSource} \n");
             Node previousScene = referenceScene.GetTree().Root.GetChild(0);
             /*
             var props = GetProperties(previousScene);
@@ -21,11 +23,39 @@ namespace Satyrs_Greenwood
             //previousScene.Free();
         }
 
+        public static void DebugPrintScenesList(Spatial referenceScene)
+        {
+            int numChildren = referenceScene.GetTree().Root.GetChildCount();
+            if (numChildren > 0)
+            {
+                GD.Print($"DebugPrintScenesList - scenes count = {numChildren}\n");
+                int idx = 0;
+                foreach (object sceneX in referenceScene.GetTree().Root.GetChildren())
+                {
+                    Diagnostics.PrintObjectProperties($"scene [{idx}] = ", sceneX);
+                    idx += 1;
+                }
+            }
+        }
+
         public void ChangeScene(Spatial referenceScene, string scenePath)
         {
             newScene = (PackedScene)ResourceLoader.Load(scenePath);
             if (newScene != null)
                 referenceScene.GetTree().Root.AddChild(newScene.Instance());
+        }
+
+        public static void LinkSceneToViewport(string scenePath, Viewport parentViewport)
+        {
+            if (parentViewport != null)
+            {
+                PackedScene viewportScene = (PackedScene)ResourceLoader.Load(scenePath);
+                if (viewportScene != null)
+                {
+                    //Link to the parent Viewport
+                    ViewportFrameInterface.HookupExistingNode(parentViewport, (Node2D)viewportScene.Instance());
+                }
+            }
         }
 
         public static void ExitApplication(Spatial referenceScene)

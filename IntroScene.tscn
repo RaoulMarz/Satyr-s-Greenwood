@@ -1,8 +1,8 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://Assets/Images/ancient_wagon_wheel.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Images/hero_bard.png" type="Texture" id=2]
-[ext_resource path="res://HUD-PathFind.tscn" type="PackedScene" id=3]
+[ext_resource path="res://StoryArcBoard.tscn" type="PackedScene" id=3]
 [ext_resource path="res://IntroScene.cs" type="Script" id=4]
 [ext_resource path="res://Assets/Images/wheat_strip1.png" type="Texture" id=5]
 [ext_resource path="res://Assets/Images/wheat_strip2.png" type="Texture" id=6]
@@ -14,6 +14,12 @@
 [ext_resource path="res://Assets/Images/Kings_Castle_onHill_render.png" type="Texture" id=12]
 [ext_resource path="res://Assets/Models/Kings-Village-Terrain.dae" type="PackedScene" id=13]
 [ext_resource path="res://Assets/Music/Soundtracks/satyr_7_title.ogg" type="AudioStream" id=14]
+[ext_resource path="res://Assets/Images/TileSheets/bluesizzle_tilesheet.png" type="Texture" id=15]
+[ext_resource path="res://Assets/Images/ancient_wagon_wheel2.png" type="Texture" id=16]
+[ext_resource path="res://Assets/Images/bash_boulder2.png" type="Texture" id=17]
+[ext_resource path="res://Assets/Images/bash_boulder1.png" type="Texture" id=18]
+[ext_resource path="res://Assets/Images/bash_boulder3.png" type="Texture" id=19]
+[ext_resource path="res://Assets/Images/Icons/door_exit_icon_w256.png" type="Texture" id=20]
 
 [sub_resource type="ViewportTexture" id=1]
 viewport_path = NodePath("Viewport")
@@ -50,44 +56,107 @@ tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = PoolRealArray( 0, 1, 9.22474, 0.535618, -8.29905, 0, 0, 0, 1, 1, 1, 1, 0.7, 1, 8.895, 0.555, -8.299, 0, 0, 0, 1, 1, 1, 1, 1.6, 1, 9.74, 0.542, -8.34, 0, 0, 0, 1, 1, 1, 1, 4, 1, 8.925, 0.546, -8.335, 0, 0, 0, 1, 1, 1, 1, 7, 1, 9.075, 0.542, -8.185, 0, 0, 0, 1, 1, 1, 1, 8.7, 1, 9.185, 0.528, -8.342, 0, 0, 0, 1, 1, 1, 1 )
 
+[sub_resource type="AtlasTexture" id=4]
+flags = 7
+atlas = ExtResource( 15 )
+region = Rect2( 0, 0, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=5]
+flags = 7
+atlas = ExtResource( 15 )
+region = Rect2( 256, 0, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=6]
+flags = 7
+atlas = ExtResource( 15 )
+region = Rect2( 0, 256, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=7]
+flags = 7
+atlas = ExtResource( 15 )
+region = Rect2( 256, 256, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=8]
+flags = 7
+atlas = ExtResource( 15 )
+region = Rect2( 0, 512, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=9]
+flags = 7
+atlas = ExtResource( 15 )
+region = Rect2( 256, 512, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=10]
+flags = 7
+atlas = ExtResource( 15 )
+region = Rect2( 0, 768, 256, 256 )
+
+[sub_resource type="AtlasTexture" id=11]
+flags = 7
+atlas = ExtResource( 15 )
+region = Rect2( 256, 768, 256, 256 )
+
+[sub_resource type="SpriteFrames" id=12]
+animations = [ {
+"frames": [ SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ) ],
+"loop": true,
+"name": "default",
+"speed": 12.0
+} ]
+
+[sub_resource type="DynamicFontData" id=13]
+font_path = "res://Assets/Fonts/nimbus-mono/nimbusmono-regular.otf"
+
+[sub_resource type="DynamicFont" id=14]
+font_data = SubResource( 13 )
+
+[sub_resource type="Theme" id=15]
+default_font = SubResource( 14 )
+
+[sub_resource type="StyleBoxFlat" id=16]
+border_width_left = 2
+border_width_right = 2
+border_color = Color( 0.545098, 0.0431373, 0.0431373, 1 )
+border_blend = true
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
 [node name="IntroScene" type="Spatial"]
 script = ExtResource( 4 )
 
 [node name="sprite-Wheel1" type="Sprite3D" parent="."]
-transform = Transform( 0.453154, -0.1792, 0.111977, 0, 0.26496, 0.424024, -0.211309, -0.384296, 0.240135, -7.76501, 0.437419, -10.1431 )
+transform = Transform( 0.453154, -0.1792, 0.111977, 0, 0.26496, 0.424024, -0.211309, -0.384296, 0.240135, -7.76501, -0.362021, -10.1431 )
 cast_shadow = 0
 texture = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="sprite-Wheel2" type="Sprite3D" parent="."]
+transform = Transform( 0.334565, -0.324985, 0.180142, 0, 0.242405, 0.43731, -0.371572, -0.292617, 0.1622, 6.99628, 0.125962, -7.5872 )
+cast_shadow = 0
+texture = ExtResource( 16 )
 
 [node name="sprite-Boulder1" type="Sprite3D" parent="."]
-transform = Transform( 0.453154, -0.1792, 0.111977, 0, 0.26496, 0.424024, -0.211309, -0.384296, 0.240135, -7.76501, 0.437419, -10.1431 )
+transform = Transform( 0.453154, -0.108832, 0.181127, 0, 0.428583, 0.257519, -0.211309, -0.233391, 0.388429, 18.4227, -0.739177, -12.0932 )
 cast_shadow = 0
-texture = ExtResource( 1 )
+texture = ExtResource( 18 )
 
 [node name="sprite-Boulder2" type="Sprite3D" parent="."]
-transform = Transform( 0.453154, -0.1792, 0.111977, 0, 0.26496, 0.424024, -0.211309, -0.384296, 0.240135, -7.76501, 0.437419, -10.1431 )
+transform = Transform( 0.485148, -0.0549151, 0.107777, 0, 0.445503, 0.226995, -0.120961, -0.220252, 0.43227, -20.5595, -1.12114, -19.7745 )
 cast_shadow = 0
-texture = ExtResource( 1 )
+texture = ExtResource( 17 )
 
 [node name="sprite-Boulder3" type="Sprite3D" parent="."]
-transform = Transform( 0.453154, -0.1792, 0.111977, 0, 0.26496, 0.424024, -0.211309, -0.384296, 0.240135, -7.76501, 0.437419, -10.1431 )
+transform = Transform( 0.478152, -0.0328847, 0.142439, 0, 0.487185, 0.112476, -0.146186, -0.107561, 0.465897, -12.5724, -1.6532, -5.57454 )
 cast_shadow = 0
-texture = ExtResource( 1 )
+texture = ExtResource( 19 )
 
 [node name="sprite-Player-Character" type="Sprite3D" parent="."]
 transform = Transform( 0.33, 0, 0, 0, 0.33, 0, 0, 0, 0.33, 0, 2, -17.8061 )
 texture = ExtResource( 2 )
-
-[node name="Viewport" type="Viewport" parent="."]
-size = Vector2( 220, 620 )
-transparent_bg = true
-keep_3d_linear = true
-usage = 0
-debug_draw = 1
-render_target_v_flip = true
-render_target_update_mode = 3
-
-[node name="HUD-PathFind" parent="Viewport" instance=ExtResource( 3 )]
-visible = false
 
 [node name="sprite-HUD-PathFind" type="Sprite3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 9 )
@@ -98,8 +167,8 @@ double_sided = false
 texture = SubResource( 1 )
 
 [node name="game-Camera" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 26.9306 )
-fov = 45.0
+transform = Transform( 1, 0, 0, 0, 0.993399, 0.114712, 0, -0.114712, 0.993399, 0, 8.67191, 10.0963 )
+fov = 55.0
 far = 360.0
 
 [node name="intro-Timer" type="Timer" parent="."]
@@ -107,19 +176,39 @@ wait_time = 0.05
 autostart = true
 
 [node name="sprite-Wheat1" type="Sprite3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13.1057, 0.961433, -16.034 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13.12, 0.770398, -16.034 )
 texture = ExtResource( 5 )
 
 [node name="sprite-Wheat2" type="Sprite3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.1678, 0.544808, -8.33649 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.22474, 0.14459, -8.29905 )
 texture = ExtResource( 6 )
 
 [node name="sprite-Wheat3" type="Sprite3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12.1686, 0.535618, -7.19804 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12.1686, -0.384735, -7.19804 )
 texture = ExtResource( 6 )
 
 [node name="sprite-Wheat4" type="Sprite3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -15.5125, 0.535618, -5.28092 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -15.5125, -0.382952, -5.28092 )
+texture = ExtResource( 5 )
+
+[node name="sprite-Wheat5" type="Sprite3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 22.2732, -0.682829, -5.28092 )
+texture = ExtResource( 5 )
+
+[node name="sprite-Wheat6" type="Sprite3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.74618, -1.09539, -3.86671 )
+texture = ExtResource( 5 )
+
+[node name="sprite-Wheat7" type="Sprite3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24.2096, -0.748622, -12.5988 )
+texture = ExtResource( 5 )
+
+[node name="sprite-Wheat8" type="Sprite3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -17.808, -0.910804, -10.8728 )
+texture = ExtResource( 5 )
+
+[node name="sprite-Wheat9" type="Sprite3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -28.3828, -0.969632, -3.33851 )
 texture = ExtResource( 5 )
 
 [node name="sprite-BannerBeacon" type="Sprite3D" parent="."]
@@ -137,11 +226,36 @@ animation = "burn-out"
 stream = ExtResource( 14 )
 
 [node name="sprite-KingsHill" type="Sprite3D" parent="."]
-transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 2, -13.721, 5.577, -92.8008 )
+transform = Transform( 8, 0, 0, 0, 8, 0, 0, 0, 3, -9.01005, 34.4416, -81.6849 )
 texture = ExtResource( 12 )
 
 [node name="Kings-Village-Terrain" parent="." instance=ExtResource( 13 )]
 transform = Transform( -7.82019e-07, 0, 5, 0, 2, 0, -4.8, 0, -8.14603e-07, -9.1716, -8.64478, -38.2853 )
 
-[node name="animPlayer-WeaveGrass" type="AnimationPlayer" parent="."]
+[node name="animplayer-WeaveGrass" type="AnimationPlayer" parent="."]
 anims/Sway-Grass = SubResource( 3 )
+
+[node name="animsprite-MagicEffect1" type="AnimatedSprite3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.407485, 2.306, -19 )
+opacity = 0.77
+frames = SubResource( 12 )
+
+[node name="animplayer-MagicProjectiles" type="AnimationPlayer" parent="."]
+
+[node name="sprite-ExitScene" type="Sprite3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.83007, 5.15469, 11.3501 )
+visible = false
+texture = ExtResource( 20 )
+
+[node name="panel-Options" type="Panel" parent="."]
+visible = false
+margin_right = 220.0
+margin_bottom = 620.0
+theme = SubResource( 15 )
+custom_styles/panel = SubResource( 16 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StoryArcBoard" parent="." instance=ExtResource( 3 )]
+visible = false
