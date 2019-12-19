@@ -58,7 +58,7 @@ namespace Satyrs_Greenwood
             }
         }
 
-        public static void ExitApplication(Spatial referenceScene)
+        public static void ExitApplication(/*Spatial*/Node referenceScene)
         {
             referenceScene.GetTree().Quit();
         }
@@ -85,6 +85,40 @@ namespace Satyrs_Greenwood
         {
             Godot.Vector3 circleCoord = CalculateCirclePosition(circlePosition, radiusCircle, step / 1.0f);
             aCamera.Translation = circleCoord;
+        }
+
+        public static Rect2 GetApplicationWindowExtent(Spatial referenceScene)
+        {
+            Rect2 res;
+            res = referenceScene.GetTree().Root.GetVisibleRect();
+            return res;
+        }
+
+        public static Vector2 GetExtentOffsetsForCenter(Spatial referenceScene, Control graphicsControl)
+        {
+            Vector2 res = new Vector2();
+            if (graphicsControl != null)
+            {
+                Rect2 appExtent = GetApplicationWindowExtent(referenceScene);
+                if (appExtent.Size.x >= 100.0f)
+                {
+                    res = new Vector2(appExtent.Size.x, appExtent.Size.y);
+                }
+            }
+            return res;
+        }
+
+        public static void PlaceControlTopLeft(Spatial referenceScene, Control graphicsControl, Vector2 placePosition)
+        {
+            if ( (graphicsControl != null) && (placePosition != null) )
+            {
+                Rect2 appExtent = GetApplicationWindowExtent(referenceScene);
+                if (appExtent.Size.x >= 100.0f)
+                {
+                    Vector2 controlExtent = graphicsControl.RectSize;
+                    graphicsControl.RectPosition = placePosition;
+                }
+            }
         }
     }
 }

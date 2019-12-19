@@ -17,6 +17,8 @@ namespace Satyrs_Greenwood
         private Sprite3D spriteGameSplash;
         private Sprite3D spritePalms1;
         private Sprite3D spritePalms2;
+        private Spatial rocksFirepit;
+        private Control controlVersionInfo;
         //private Sprite3D spriteIndicatorCamera;
         //private Sprite3D spriteIndicatorPlayer;
         private AnimatedSprite3D animspriteRippleFlames;
@@ -35,7 +37,8 @@ namespace Satyrs_Greenwood
         const float CAMERA_FOV_INCREASE = 0.2f;
         const float CAMERA_FAR_DECREASE = -0.25f;
         const float CAMERA_FAR_INCREASE = 0.25f;
-        string[] introStoryTextArray = {"You have been secretly summoned by the King, and have met the King and his most trusted outside the walls of the town.",
+        string storyCaption = "Appointment by the King";
+        string[] introStoryTextArray = {"You have been secretly summoned by the King, and have met the King and his most trusted aides, outside the walls of the town.",
             "Your mission which you rightly could not refuse, is to set out to investigate some troubling disturbances that seems to be connected to what is now Satyr's Greenwood.",
                 "Not much is known, except that rumors persist about some extremely stealthy cul,t that if the murmurings are true, are set out to spread evil and malfeasance." };
         const string storyArcResource = "res://StoryArcBoard.tscn";
@@ -70,6 +73,8 @@ namespace Satyrs_Greenwood
             spritePalms1.Visible = visibleFlag;
             spritePalms2.Visible = visibleFlag;
             animspriteRippleFlames.Visible = visibleFlag;
+            if (rocksFirepit != null)
+                rocksFirepit.Visible = visibleFlag;
         }
 
         private void GeneratePlayerViewport()
@@ -81,10 +86,18 @@ namespace Satyrs_Greenwood
                 GD.Print($"Loading storyArcBoard from PackedScene, storyArcBoard = {storyArcBoard.Name}");
                 //playerViewport.AddChild(viewportScene.Instance());
                 storyArcBoard.Visible = false;
-                storyArcBoard.SetTitle("Appointment by the King");
+                storyArcBoard.Connect("ready", this, nameof(_on_StoryBoardArc_Ready));
+                //storyArcBoard.SetTitle("Appointment by the King");
                 /*GetTree().Root.AddChild*/
                 AddChild(storyArcBoard);
             }
+        }
+
+        private void _on_StoryBoardArc_Ready()
+        {
+            GD.Print($"_on_StoryBoardArc_Ready(), storyArcBoard = {storyArcBoard.Name}");
+            storyArcBoard.SetTitle(storyCaption);
+            SceneUtilities.PlaceControlTopLeft(this, controlVersionInfo, new Vector2(522.0f, 5f));
         }
 
         private void ShowArcBoardParagraph(int paragraph)
@@ -191,6 +204,7 @@ namespace Satyrs_Greenwood
         {
             GD.Print("Testing the IntroScene");
             sceneUtil = new SceneUtilities();
+            controlVersionInfo = this.GetNodeOrNull<Control>("VersionInfoPanel");
             introTimer = this.GetNodeOrNull<Timer>("intro-Timer");
             if (introTimer != null)
             {
@@ -228,12 +242,14 @@ namespace Satyrs_Greenwood
             spritePalms2 = this.GetNodeOrNull<Sprite3D>("sprite-Palms2");
             spritePalms1.Visible = false;
             spritePalms2.Visible = false;
+            rocksFirepit = this.GetNodeOrNull<Spatial>("rocks_circular_firepit");
+
             /*
             spriteIndicatorCamera = this.GetNodeOrNull<Sprite3D>("sprite-Camera-Indicator");
             spriteIndicatorPlayer = this.GetNodeOrNull<Sprite3D>("sprite-Player-Indicator");
             spriteIndicatorCamera.Visible = false;
             spriteIndicatorPlayer.Visible = false;
-            */           
+            */
             hudSpritePathFind = this.GetNodeOrNull<Sprite3D>("sprite-HUD-PathFind");
             if (hudSpritePathFind != null)
             {

@@ -1,14 +1,20 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://CultHideout.cs" type="Script" id=1]
-[ext_resource path="res://Assets/Models/hideout_deepwoods_landscape.dae" type="PackedScene" id=2]
+[ext_resource path="res://Assets/Models/hideout_deepwoods_landscape.fbx" type="PackedScene" id=2]
 [ext_resource path="res://Assets/Images/AnimatedCharacters/skeleton_walker1_seq1.png" type="Texture" id=3]
 [ext_resource path="res://Assets/Images/AnimatedCharacters/skeleton_walker1_seq3.png" type="Texture" id=4]
 [ext_resource path="res://Assets/Images/AnimatedCharacters/skeleton_walker1_seq2.png" type="Texture" id=5]
 [ext_resource path="res://Assets/Images/willowtree#2.png" type="Texture" id=6]
 [ext_resource path="res://Assets/Images/willowtree#1.png" type="Texture" id=7]
-[ext_resource path="res://Assets/Models/forest_cult_chill-zone#3.dae" type="PackedScene" id=8]
+[ext_resource path="res://Assets/Models/forest-garden-posts-stump#2.dae" type="PackedScene" id=8]
 [ext_resource path="res://HelpPanel.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Assets/Models/forest-garden-posts-stump#1.dae" type="PackedScene" id=10]
+[ext_resource path="res://Assets/Models/garden-step-stone-pyramid.dae" type="PackedScene" id=11]
+[ext_resource path="res://Assets/Models/garden-step-stone-pyramid_spiderprint.dae" type="PackedScene" id=12]
+[ext_resource path="res://InGameMenu.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Assets/Models/cult_boulder_stand1.fbx" type="PackedScene" id=14]
+[ext_resource path="res://Assets/Models/cult_rock_boss.fbx" type="PackedScene" id=15]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -37,7 +43,8 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20.9278, 12.9779, -24.9184 )
 frames = SubResource( 1 )
 
 [node name="animsprite-Wraith-Mob" type="AnimatedSprite3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20.9278, 12.9779, -24.9184 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -54.1811, 12.9779, -24.9184 )
+visible = false
 frames = SubResource( 1 )
 
 [node name="game1-Timer" type="Timer" parent="."]
@@ -48,16 +55,66 @@ transform = Transform( 1, 0, 0, 0, 0.983255, 0.182236, 0, -0.182236, 0.983255, 0
 fov = 65.0
 far = 240.0
 
-[node name="Sprite3D" type="Sprite3D" parent="."]
+[node name="sprite-Willowtree1" type="Sprite3D" parent="."]
 transform = Transform( 2.5, 0, 0, 0, 2.6, 0, 0, 0, 2.5, -35.4189, 21.5128, -45.1851 )
 texture = ExtResource( 7 )
 
-[node name="Sprite3D2" type="Sprite3D" parent="."]
+[node name="sprite-Willowtree2" type="Sprite3D" parent="."]
 transform = Transform( 2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, -13.5952, 19.8231, -47.6446 )
 texture = ExtResource( 6 )
 
-[node name="forest_cult_chill-zone#3" parent="." instance=ExtResource( 8 )]
-transform = Transform( -1.4, 0, -4.67297e-07, 0, 1.4, 0, 5.4518e-07, 0, -1.2, -123.871, 10.8148, -131.862 )
+[node name="sprite-Willowtree3" type="Sprite3D" parent="."]
+transform = Transform( 2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 11.2856, 19.8231, -41.3639 )
+texture = ExtResource( 6 )
+
+[node name="sprite-Tupelotree1" type="Sprite3D" parent="."]
+transform = Transform( 2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 87.4441, 21.5485, -61.2655 )
+visible = false
+texture = ExtResource( 6 )
+
+[node name="sprite-Tupelotree2" type="Sprite3D" parent="."]
+transform = Transform( 2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 113.227, 21.5485, -88.9697 )
+visible = false
+texture = ExtResource( 6 )
+
+[node name="sprite-BigBoulders1" type="Sprite3D" parent="."]
+transform = Transform( 2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, -24.8429, 22.2574, -144.609 )
+visible = false
+texture = ExtResource( 6 )
+
+[node name="sprite-BigBoulders2" type="Sprite3D" parent="."]
+transform = Transform( 2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 10.2723, 22.2574, -123.616 )
+visible = false
+texture = ExtResource( 6 )
 
 [node name="HelpPanel" parent="." instance=ExtResource( 9 )]
 visible = false
+
+[node name="forest-garden-posts-stump#1" parent="." instance=ExtResource( 10 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -126, 12.1054, -132.338 )
+
+[node name="forest-garden-posts-stump#2" parent="." instance=ExtResource( 8 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -129.1, 11.87, -130.696 )
+
+[node name="garden-step-stone-pyramid" parent="." instance=ExtResource( 11 )]
+transform = Transform( 2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, -102.07, 12.9569, -134.713 )
+
+[node name="garden-step-stone-pyramid_spiderprint" parent="." instance=ExtResource( 12 )]
+transform = Transform( 3.2, 0, 0, 0, 3.2, 0, 0, 0, 2.72, -72.5097, 11.2902, -162.294 )
+
+[node name="menu-GameContext" parent="." instance=ExtResource( 13 )]
+visible = false
+
+[node name="cult_boulder_stand1" parent="." instance=ExtResource( 14 )]
+transform = Transform( 6, 0, 0, 0, 6, 0, 0, 0, 6, -21.0079, 6.81761, -138.202 )
+
+[node name="cult_rock_boss" parent="." instance=ExtResource( 15 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -31.2354, 12.1888, -107.215 )
+
+[node name="OmniLight" type="OmniLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.37077, 83.4046, -153.425 )
+light_color = Color( 0.960784, 0.0862745, 0.415686, 1 )
+light_specular = 0.35
+shadow_enabled = true
+shadow_color = Color( 0.0156863, 0, 0, 1 )
+omni_range = 160.0

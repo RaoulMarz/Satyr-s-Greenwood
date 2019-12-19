@@ -41,14 +41,14 @@ namespace Satyrs_Greenwood
         private String nextSceneResource = "res://CultHideout.tscn"; //"res://CultHideout.tscn" or "res://TestScene1.tscn"
         private SceneUtilities sceneUtil;
         private Dictionary<string, FlagDateTime> specialEffectsTrackMap = new Dictionary<string, FlagDateTime>();
-        private ViewportFrameInterface viewportDialogueFrame;
         private bool triggerGameStage1 = false;
         const float cameraSlowPanSpeed = 0.075f;
         const float dialogueBoxHeight = 600.0f;
         const float dialogueBoxWidth = 420.0f;
         const int storyInitiateCutsceneTicks = 800;
         int[] markersStoryParagraph = { 200, 420, 640 };
-        string[] introStoryTextArray = {"Our bard investigator sets out on foot, just leaving King's Hill. It is already very clear that the state of the kingdom is declining", 
+        string storyCaption = "Leaving Castle Town";
+        string[] introStoryTextArray = {"Our bard investigator sets out on foot, just now leaving King's Hill. It is already very clear that the state of the kingdom is in decline", 
             "(Kingsman) Destroyed caravans as far as the eye can see. Whoever did this is no common bandit. Let's see what we're up against.",
                 "(Kingsman) A lot of thugs in this forest. This must be their hideout." };
         const string storyArcResource = "res://StoryArcBoard.tscn";
@@ -64,17 +64,23 @@ namespace Satyrs_Greenwood
             return (Node2D)viewportScene.Instance();
         }
 
+        private void _on_StoryBoardArc_Ready()
+        {
+            GD.Print($"_on_StoryBoardArc_Ready(), storyArcBoard = {storyArcBoard.Name}");
+            storyArcBoard.SetTitle(storyCaption);
+        }
+
         private void GeneratePlayerViewport()
         {
                 PackedScene viewportScene = (PackedScene)ResourceLoader.Load(storyArcResource);
                 if (viewportScene != null)
                 {
                     storyArcBoard = (StoryArcBoard)viewportScene.Instance();
+                    storyArcBoard.Connect("ready", this, nameof(_on_StoryBoardArc_Ready));
                     GD.Print($"Loading storyArcBoard from PackedScene, storyArcBoard = {storyArcBoard.Name}");
                     //playerViewport.AddChild(viewportScene.Instance());
                     storyArcBoard.Visible = false;
-                    storyArcBoard.SetTitle("Leaving Castle Town");
-                    /*GetTree().Root.AddChild*/
+                    //storyArcBoard.SetTitle("Leaving Castle Town");
                     AddChild(storyArcBoard);
                 }
         }
@@ -90,9 +96,11 @@ namespace Satyrs_Greenwood
 
         private void _on_ElegantExit()
         {
-            for (int ix = 0; ix < 5; ix++)
+            if (introTimer != null)
+                introTimer.Stop();
+            for (int ix = 0; ix < 18; ix++)
             {
-                System.Threading.Thread.Sleep(100);
+                System.Threading.Thread.Sleep(500);
             }
             sceneUtil.ChangeScene(this, nextSceneResource);
         }
@@ -120,7 +128,10 @@ namespace Satyrs_Greenwood
 
         private bool SpecialEffectHasStarted(string effectName)
         {
-            return specialEffectsTrackMap.ContainsKey(effectName);
+            bool res = false;
+            if (specialEffectsTrackMap != null)
+                return specialEffectsTrackMap.ContainsKey(effectName);
+            return res;
         }
 
         private void GameCameraTranslateAxis(float xlateValue, GeometricAxis axisChoice/* = GeometricAxis.GEOMETRIC_AXIS_Z*/)
@@ -171,7 +182,7 @@ namespace Satyrs_Greenwood
                     introTimer.WaitTime = 5.0f;
                     GD.Print($"Switching scenes, Timer Counter = {introTimerCounter}");
                     introTimer.Stop();
-                    introTimer.Free();
+                    //introTimer.Free();
                     /* send a signal here */
                     if (sceneUtil != null)
                     {
@@ -219,10 +230,6 @@ namespace Satyrs_Greenwood
             {
                 completedFlagIntro = true;
                 //ResetSpritesVisibility(true);
-                //spriteGameSplash.Visible = false;
-                //movementActionsActive = true;
-                //SetCameraPosition(new Vector3(0f, 0f, 12.0f));
-                //showHUDPathFind = true;
             }
             if (((introTimerCounter % 5) == 0) && (showHUDPathFind))
             {
@@ -239,6 +246,8 @@ namespace Satyrs_Greenwood
             introTimer = this.GetNodeOrNull<Godot.Timer>("intro-Timer");
             if (introTimer != null)
             {
+                /* If Windows then reduce timer resolution */
+                //introTimer.WaitTime = 0.1f;
                 introTimer.Connect("timeout", this, nameof(_on_IntroTimer_timeout));
                 //if (introTimer.isStopped()) {
                 introTimer.Start();
@@ -314,9 +323,10 @@ namespace Satyrs_Greenwood
         {
             if (tick >= 120)
                 return;
+            /*
             if ((animspriteMagicEffect1 != null) && (tick > 0))
             {
-                if (SpecialEffectHasStarted("magic-effect1") == false) // ( (!animspriteMagicEffect1.Playing) && 
+                if (SpecialEffectHasStarted("magic-effect1") == false) // ( (!animspriteMagicEffect1.Playing)
                 {
                     GD.Print($"AnimateMagicEffect1, is playing = {animspriteMagicEffect1.Playing}");
                     animspriteMagicEffect1.Play("default");
@@ -335,6 +345,7 @@ namespace Satyrs_Greenwood
                     }
                 }
             }
+            */
         }
 
         private bool InAxisBounds(float position, GeometricAxis axisChoice)
@@ -409,7 +420,7 @@ namespace Satyrs_Greenwood
 
             if (Input.IsActionPressed("toggle_switch_action"))
             { //The TAB key ?? switch between camera change or player movement
-                if (InputAssistance.KeyBounceCheck("TOGGLE_SWITCH", 0.45f, 1.2f))
+                if (InputAssistance.KeyBounceCheckAlternative("TOGGLE_SWITCH", 0.45f, 1.2f))
                 {
                     flagSceneExitAllowed = !flagSceneExitAllowed;
                     if (spriteExitScene != null)

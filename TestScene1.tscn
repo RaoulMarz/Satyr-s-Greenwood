@@ -1,25 +1,27 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
-[ext_resource path="res://Assets/Images/Brown-Pots-Garden.png" type="Texture" id=1]
-[ext_resource path="res://Assets/Images/hero_bard.png" type="Texture" id=2]
-[ext_resource path="res://HUD-PathFind.tscn" type="PackedScene" id=3]
-[ext_resource path="res://TestScene1.cs" type="Script" id=4]
+[ext_resource path="res://TestScene1.cs" type="Script" id=1]
+[ext_resource path="res://Assets/Images/Brown-Pots-Garden.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Images/hero_bard.png" type="Texture" id=3]
+[ext_resource path="res://HUD-PathFind.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Assets/Images/terrain_fanferns#1.png" type="Texture" id=5]
 [ext_resource path="res://Assets/Images/terrain_fanferns#2.png" type="Texture" id=6]
 [ext_resource path="res://Assets/Images/Intro/Satyrs_Greenwood_Setpiece.jpg" type="Texture" id=7]
-[ext_resource path="res://Assets/Images/Effects/Flames/ripple_flamer#3.png" type="Texture" id=8]
-[ext_resource path="res://Assets/Images/Effects/Flames/ripple_flamer#1.png" type="Texture" id=9]
-[ext_resource path="res://Assets/Images/Effects/Flames/ripple_flamer#2.png" type="Texture" id=10]
+[ext_resource path="res://Assets/Images/Effects/Flames/ripple_flamer#1.png" type="Texture" id=8]
+[ext_resource path="res://Assets/Images/Effects/Flames/ripple_flamer#2.png" type="Texture" id=9]
+[ext_resource path="res://Assets/Images/Effects/Flames/ripple_flamer#3.png" type="Texture" id=10]
 [ext_resource path="res://Assets/Images/Effects/Flames/ripple_flamer#4.png" type="Texture" id=11]
 [ext_resource path="res://Assets/Images/Icons/video_camera.png" type="Texture" id=12]
 [ext_resource path="res://Assets/Images/Icons/hero_iconograph.png" type="Texture" id=13]
+[ext_resource path="res://VersionInfoPanel.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Assets/Models/rocks_circular_firepit.fbx" type="PackedScene" id=15]
 
 [sub_resource type="ViewportTexture" id=1]
 viewport_path = NodePath("Viewport")
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
-"frames": [ ExtResource( 9 ), ExtResource( 10 ), ExtResource( 8 ), ExtResource( 11 ) ],
+"frames": [ ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ) ],
 "loop": true,
 "name": "default",
 "speed": 12.0
@@ -31,16 +33,16 @@ animations = [ {
 } ]
 
 [node name="TestScene1" type="Spatial"]
-script = ExtResource( 4 )
+script = ExtResource( 1 )
 
 [node name="sprite-Pots" type="Sprite3D" parent="."]
 transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -5, 0, 0 )
 cast_shadow = 0
-texture = ExtResource( 1 )
+texture = ExtResource( 2 )
 
 [node name="sprite-Player-Character" type="Sprite3D" parent="."]
 transform = Transform( 0.33, 0, 0, 0, 0.33, 0, 0, 0, 0.33, 0, 2, 4 )
-texture = ExtResource( 2 )
+texture = ExtResource( 3 )
 
 [node name="Viewport" type="Viewport" parent="."]
 size = Vector2( 220, 620 )
@@ -51,7 +53,7 @@ debug_draw = 1
 render_target_v_flip = true
 render_target_update_mode = 3
 
-[node name="HUD-PathFind" parent="Viewport" instance=ExtResource( 3 )]
+[node name="HUD-PathFind" parent="Viewport" instance=ExtResource( 4 )]
 
 [node name="sprite-HUD-PathFind" type="Sprite3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 9 )
@@ -87,6 +89,10 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55591, 0, 7.0258 )
 frames = SubResource( 2 )
 animation = "burn-out"
 
+[node name="rocks_circular_firepit" parent="." instance=ExtResource( 15 )]
+transform = Transform( 0.45, 0, 0, 0, 0.43, 0, 0, 0, 0.42, 1.55756, -1.48428, 6.81954 )
+visible = false
+
 [node name="sprite-Camera-Indicator" type="Sprite3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.21567, 6.61281, 5.38681 )
 visible = false
@@ -96,3 +102,5 @@ texture = ExtResource( 12 )
 transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 10.222, 6.29513, 4.65952 )
 visible = false
 texture = ExtResource( 13 )
+
+[node name="VersionInfoPanel" parent="." instance=ExtResource( 14 )]
